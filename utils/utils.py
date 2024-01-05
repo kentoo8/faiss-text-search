@@ -82,9 +82,10 @@ class FaissDriver:
         num_neighbors: int = 3,
     ) -> dict:
         """
-        query_vectors の shape: (num_vectors, dim)
-        distances     の shape: (num_vectors, num_neighbors)
-        ids           の shape: (num_vectors, num_neighbors)
+        base_vectors  の shape: (num_base_vectors , dim)
+        query_vectors の shape: (num_query_vectors, dim)
+        distances     の shape: (num_query_vectors, num_neighbors)
+        ids           の shape: (num_query_vectors, num_neighbors)
         """
         base_index = FaissDriver.array_to_index(base_vectors)
 
