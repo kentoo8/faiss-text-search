@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "faiss-text-search"
+version = "0.1.0"
+description = "OpenAIの埋め込みとFaiss driverのutils"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+faiss-cpu = "^1.7.4"
+langchain = "^0.0.354"
+pandas = "^2.1.4"
+openai = "^1.6.1"
+tiktoken = "^0.5.2"
+
+[tool.poetry.extras]
+openai = ["openai", "tiktoken"]
+
