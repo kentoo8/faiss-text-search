@@ -77,7 +77,7 @@ class FaissDriver:
         return vectors.astype(dtype)
 
     @staticmethod
-    def read_index(path: str) -> None:
+    def read_index(path: str) -> faiss.Index:
         index = faiss.read_index(path)
         return index
 
