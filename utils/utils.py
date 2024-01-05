@@ -79,7 +79,7 @@ class FaissDriver:
     def get_indexes_and_distances(
         base_vectors: np.ndarray,
         query_vectors: np.ndarray | None = None,
-        num_neighbors: int = 3,
+        num_neighbors: int = 10,
     ) -> dict:
         """
         base_vectors  の shape: (num_base_vectors , dim)
