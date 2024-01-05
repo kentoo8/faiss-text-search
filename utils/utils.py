@@ -49,12 +49,21 @@ class FaissDriver:
         pass
 
     @staticmethod
-    def array_to_index(vectors: np.ndarray) -> faiss.Index:
+    def array_to_index(
+        vectors: np.ndarray, similarity_measure: str = "L2"
+    ) -> faiss.Index:
         if len(vectors.shape) != 2:
             raise ValueError("Expected a 2D array")
 
         dim = vectors.shape[1]
-        index = faiss.IndexFlatL2(dim)
+        if similarity_measure == "L2":
+            index = faiss.IndexFlatL2(dim)
+        elif similarity_measure == "InnerProduct":
+            index = faiss.IndexFlatIP(dim)
+        else:
+            raise ValueError(
+                "Invalid similarity_measure. Choose either 'L2' or 'InnerProduct'"
+            )
         index.add(vectors)
         return index
 
@@ -81,6 +90,7 @@ class FaissDriver:
         base_vectors: np.ndarray,
         query_vectors: np.ndarray | None = None,
         num_neighbors: int = 10,
+        similarity_measure: str = "L2",
     ) -> dict:
         """
         base_vectors  の shape: (num_base_vectors , dim)
@@ -88,10 +98,12 @@ class FaissDriver:
         distances     の shape: (num_query_vectors, num_neighbors)
         ids           の shape: (num_query_vectors, num_neighbors)
         """
-        base_index = FaissDriver.array_to_index(base_vectors)
+        base_index = FaissDriver.array_to_index(
+            base_vectors, similarity_measure=similarity_measure
+        )
 
         if query_vectors is None:
-            query_vectors = FaissDriver.index_to_array(base_index)
+            query_vectors = base_vectors
 
         distances, ids = base_index.search(x=query_vectors, k=num_neighbors)
         return {
