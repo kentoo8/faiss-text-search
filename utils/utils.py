@@ -16,7 +16,8 @@ class OpenAIEmbeddingsWithRateLimit(OpenAIEmbeddings):
     ) -> List[List[float]]:
         """
         既存のembed_documentsメソッドをオーバーライドします。
-        chunk_sizeに分けて埋め込みを実行し、Rate Limit時に待機するように変更しています。
+        変更点1: chunk_sizeに分けて埋め込みを実行し、Rate Limit時に待機するようにしています。
+        変更点2: 出力はlistでなくnp.ndarrayにしています。
         """
 
         embeddings = []
@@ -40,7 +41,7 @@ class OpenAIEmbeddingsWithRateLimit(OpenAIEmbeddings):
             if retries == max_retries:
                 raise Exception("API制限エラーが続いています。処理を中断します。")
 
-        return embeddings
+        return np.array(embeddings)
 
 
 class FaissDriver:

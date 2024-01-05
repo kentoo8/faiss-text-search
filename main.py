@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 from utils.utils import FaissDriver, OpenAIEmbeddingsWithRateLimit
@@ -9,7 +8,7 @@ def main():
     faiss_driver = FaissDriver()
 
     sample_texts = pd.read_csv("./data/sample.csv", usecols=["text"])
-    embedded = np.array(model.embed_documents(sample_texts["text"]))
+    embedded = model.embed_documents(sample_texts["text"])
 
     distances_and_ids = faiss_driver.get_indexes_and_distances(
         base_vectors=embedded,
