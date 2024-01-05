@@ -10,7 +10,7 @@ def main():
     sample_texts = pd.read_csv("./data/sample.csv", usecols=["text"])
     embedded = model.embed_documents(sample_texts["text"])
 
-    distances_and_ids = faiss_driver.get_indexes_and_distances(
+    distances_and_ids = faiss_driver.search(
         base_vectors=embedded,
         num_neighbors=10,
     )
